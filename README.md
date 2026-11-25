@@ -43,15 +43,23 @@ Share the `https://…` URL the tool prints, adding `/?c=CODE`. WebSockets work 
 
 ## How a night goes
 
-1. The **first person to join is the host** (and also a player). Everyone else joins with a name and the room code.
-2. Host opens the **Anfitrión** tab/panel and moves through the parts in any order:
-   1. *Encuesta familiar*: edit the 6 prompts if you like, start. Everyone answers privately (40 chars max).
-   2. *Adivina la respuesta más popular*: one prompt at a time; players type a guess, host reveals. Points = how many people gave the answer you matched (ignores case, accents, ñ, articles like "el/la", and plurals: "papas" = "papa").
+1. **Everyone joins on their phone** with a name, the room code and a team: **Los Pavos 🦃 (men)** or **Las Calabazas 🎃 (women)**. The **first person to join is the host** (and also a player).
+2. **Put the main screen on your computer or TV:** open `http://localhost:3000/pantalla` on the computer running the server (full screen, F11). It shows the board, scores and strikes; it doesn't need a login.
+3. The host opens the **Anfitrión** tab and moves through the parts in any order:
+   1. *Duelo familiar* (Family Feud rules, men vs women; **the computer on `/pantalla` is the emcee**: reads the question, shows the strikes, announces each answer, optionally speaks in Spanish via the "Activar voz" button). Rounds (3–8, default 4; rounds 1–2 ×1, round 3 ×2, round 4+ ×3):
+      - **Face-off:** one player per team (different players each round) races to tap **¡YO!**. The first answers; if they say the #1 answer their team wins, otherwise the rival answers and whoever gave the more popular answer wins. If neither is on the board, two new players face off.
+      - **Play or pass:** the winner of the face-off chooses. The controlling team then answers one by one, rotating through the whole team (no whispering the answer!).
+      - **3 strikes** → the other team gets **one chance to steal** with a single answer. Only answers that made it onto the board count.
+      - **Timers:** every action has a countdown (buzz 20 s, face-off 15 s, play 25 s); running out counts as a miss.
+      - If the app doesn't understand a valid answer, the host taps the right one in the list that appears after a miss.
+   2. *Ronda relámpago* (Fast Money): the team with the most points (both on a tie) plays: 2 players (picked at random), 5 questions, each player gives an answer per question; the partner can't repeat the same answer. Answers are revealed one by one on the main screen; **200+ points wins the grand prize** (+50 pts for each of the two players).
    3. *Misiones secretas* (dinner): each phone gets 4 secret missions (10/20/20/30 pts). Tap **¡Lista!**, pick a witness; points only count once the witness confirms on their phone.
-   4. *Cuenta la historia* (dessert): each phone starts a different story; each person adds one sentence (60 chars) seeing only the previous one, and stories rotate until every story has one sentence from everyone. Then each story is shown, everyone votes for the funniest sentence (not their own), authors get 10 pts per vote.
-3. **Terminar juego** shows the podium and a points-per-mode table.
+   4. *Cuenta la historia* (dessert): each phone starts a different story; each person adds one sentence (60 chars) seeing only the previous one, and stories rotate until every story has one sentence from everyone. Then each story is shown (also on the main screen), everyone votes for the funniest sentence (not their own), authors get 10 pts per vote.
+4. **Terminar juego** shows the podium and a points-per-mode table.
 
 The live leaderboard is the strip at the top of every phone (tap it to expand).
+
+The Family Feud questions and answers live in `public/es.js` (`preguntas`). The points are approximate, inspired by popular Thanksgiving survey results; they are **not** from an official poll. Edit or add questions there: `['question', [['Answer', points, ['other ways to say it']], ...]]`.
 
 ## Notes
 
@@ -66,4 +74,4 @@ The live leaderboard is the strip at the top of every phone (tap it to expand).
 npm test
 ```
 
-Starts a real server on port 3199 and plays a whole game with 8 WebSocket clients (join, duplicate/empty answers, survey grouping, guesses, missions with witness, disconnect/reconnect, server restart, story rounds, votes, winner screen).
+Starts a real server on port 3199 and plays a whole game with 8 WebSocket clients (join with teams, duplicate/empty answers, Family Feud turns/strikes/steal/host credit/double rounds, main screen, missions with witness, disconnect/reconnect, server restart, story rounds, votes, winner screen).
