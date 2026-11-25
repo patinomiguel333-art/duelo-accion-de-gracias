@@ -1,0 +1,25 @@
+{
+  "name": "duelo-accion-de-gracias",
+  "version": "1.0.0",
+  "description": "Duelo de Acción de Gracias",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "nuevo": "node server.js --nuevo",
+    "test": "node test/simulate.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0",
+    "ws": "^8.23.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

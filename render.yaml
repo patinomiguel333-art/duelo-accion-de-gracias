@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: duelo-accion-de-gracias
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ROOM_CODE
+        value: PAVO
