@@ -62,3 +62,24 @@ body[data-bg=blancas]{--img:url(bg/blancas.jpg);--ov:.55}
 body[data-bg=calabacines]{--img:url(bg/calabacines.jpg);--ov:.55}
 body[data-bg=hojas]{--img:url(bg/hojas.jpg);--ov:.5}
 body[data-bg=rayas]{--img:url(bg/rayas.jpg);--ov:.5}
+
+/* ---- Equipos y Duelo familiar ---- */
+:root{--h:#4fa6a8;--m:#f0903a}
+.btn.team{display:flex;flex-direction:column;align-items:center;gap:2px;background:#150d08;color:var(--tx);border:3px solid #5a4030;text-shadow:none}
+.btn.team small{font-weight:400;font-size:.8rem;color:var(--mut)}
+.btn.team.h.sel{border-color:var(--h);background:#12302f}.btn.team.m.sel{border-color:var(--m);background:#3a2210}
+.teams{display:flex;gap:10px;margin-bottom:8px}
+.tm{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 6px;border-radius:14px;background:#150d08;border:3px solid transparent;text-align:center;font-size:.9rem}
+.tm b{font-size:1.9rem;line-height:1.1}.tm.h{color:#bfe9ea}.tm.m{color:#ffd3a6}.tm.on.h{border-color:var(--h)}.tm.on.m{border-color:var(--m)}
+.slots{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:6px}
+.slot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;background:#1f3a58;color:#9db8d6;font-weight:700;min-height:48px}
+.slot.open{background:#f4e3c3;color:#2b1a0a;text-shadow:none}.slot.open.miss{background:#6a5a46;color:#e6d9c3}.slot.open b{background:#2b1a0a;color:#f4e3c3;border-radius:8px;padding:2px 9px}
+.strikes{display:flex;justify-content:center;gap:14px;font-size:2rem;margin:6px 0 10px}.strikes span{color:#4a3a2c}.strikes span.on{color:#ff5a4a;text-shadow:0 0 12px #ff5a4a88}
+.steal{background:#7a1f16;border:2px solid var(--bad);border-radius:12px;padding:10px;text-align:center;font-weight:700}
+.badtx{color:#ff9d8f;font-weight:600}
+
+.btn.buzz{min-height:96px;font-size:2.2rem;letter-spacing:.05em;background:linear-gradient(#e8472f,#a8200e);box-shadow:0 6px 0 #5e0f05;border-radius:50px}
+.btn.buzz:active{transform:translateY(4px);box-shadow:0 2px 0 #5e0f05}
+.cd{display:inline-block;min-width:3.2em;text-align:center;background:#150d08;border-radius:999px;padding:1px 10px;color:var(--ac);font-weight:700}
+.cd.low{background:#7a1f16;color:#fff;animation:pulse .6s infinite alternate}
+@keyframes pulse{to{transform:scale(1.12)}}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prueba: 8 teléfonos</title>
+<style>
+body{margin:0;background:#0d0a07;color:#fbefdc;font-family:system-ui,sans-serif}
+#bar{position:sticky;top:0;z-index:9;display:flex;gap:14px;align-items:center;padding:8px 14px;background:#1a1510;border-bottom:1px solid #fff3;flex-wrap:wrap}
+#bar b{color:#f0903a}#bar a,#bar button{color:#fbefdc;background:#2d3a36;border:1px solid #fff4;border-radius:8px;padding:6px 12px;text-decoration:none;font:inherit;cursor:pointer}
+.grid{display:flex;flex-wrap:wrap;gap:14px;padding:14px;align-items:flex-start}
+.cell{position:relative}.cell h4{margin:0 0 4px;font-size:14px}.cell .h{color:#7fd0d2}.cell .m{color:#f0a45a}
+.fr{width:var(--w);height:var(--h);position:relative;overflow:hidden;border-radius:12px;border:1px solid #fff4;background:#000}
+.fr iframe{border:0;transform-origin:0 0;transform:scale(var(--z))}
+.phone iframe{width:375px;height:760px}.tv iframe{width:1280px;height:720px}
+</style>
+</head>
+<body>
+<div id="bar"><b>Prueba con 8 teléfonos</b>
+<label>Tamaño <input id="z" type="range" min="40" max="100" value="62"></label>
+<button id="reset">Reiniciar prueba (borra la partida)</button>
+<span style="opacity:.7">La primera (Ana) es la anfitriona. Cada recuadro es un teléfono distinto.</span></div>
+<div class="grid" id="g"></div>
+<script>
+const people = [['Ana','m'],['Beto','h'],['Carla','m'],['Diego','h'],['Elena','m'],['Fany','m'],['Gabo','h'],['Hugo','h']];
+const team = { h: 'Los Pavos 🦃', m: 'Las Calabazas 🎃' };
+const code = new URLSearchParams(location.search).get('c') || 'PAVO';
+const g = document.getElementById('g'), z = document.getElementById('z');
+g.innerHTML = '<div class="cell tv"><h4>Pantalla principal (tele / computadora)</h4><div class="fr"><iframe src="/pantalla"></iframe></div></div>' +
+  people.map(([n, t], i) => `<div class="cell phone"><h4 class="${t}">${i + 1}. ${n}${i === 0 ? ' (anfitriona)' : ''} · ${team[t]}</h4><div class="fr"><iframe data-src="/?c=${code}&slot=${i}&n=${n}&t=${t}"></iframe></div></div>`).join('');
+// Entran de uno en uno para que Ana quede de anfitriona.
+document.querySelectorAll('iframe[data-src]').forEach((f, i) => setTimeout(() => f.src = f.dataset.src, 500 + i * 450));
+function size() {
+  const k = z.value / 100;
+  document.querySelectorAll('.cell').forEach(c => {
+    const tv = c.classList.contains('tv'), w = tv ? 1280 : 375, h = tv ? 720 : 760;
+    c.style.setProperty('--z', tv ? k * .55 : k); c.style.setProperty('--w', w * (tv ? k * .55 : k) + 'px'); c.style.setProperty('--h', h * (tv ? k * .55 : k) + 'px');
+  });
+}
+z.oninput = size; size();
+document.getElementById('reset').onclick = async () => {
+  if (!confirm('¿Borrar la partida de prueba y volver a empezar?')) return;
+  await fetch('/reset-prueba', { method: 'POST' });
+  Object.keys(localStorage).filter(k => k.startsWith('dag_')).forEach(k => localStorage.removeItem(k));
+  location.reload();
+};
+</script>
+</body>
+</html>
